@@ -15,7 +15,6 @@ datasource db {
   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL") LATER FOR MIGRATION
 }
 
-// npx prisma format .
 // npm install @prisma/client
 
 model User {
@@ -26,6 +25,8 @@ model User {
   email       String
   phoneNumber String
   pictureUrl  String
+
+  @@index([email])
 }
 
 model Booking {
@@ -37,7 +38,9 @@ model Booking {
   numberOfGuests Int
   totalPrice     Int
   bookingStatus  String
-  Property       Property @relation(fields: [propertyId], references: [id])
+  Property       Property @relation(fields: [propertyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
 }
 
 model Review {
@@ -46,7 +49,7 @@ model Review {
   propertyId String // FK
   rating     Int
   comment    String
-  Property   Property @relation(fields: [propertyId], references: [id])
+  Property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Property {
@@ -60,14 +63,18 @@ model Property {
   bathRoomCount Int
   maxGuestCount Int
   rating        Int
-  host          Host      @relation(fields: [hostId], references: [id])
+  host          Host      @relation(fields: [hostId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   bookings      Booking[]
   reviews       Review[]
+  amenities     Amenity[]
+
+  @@index([location, pricePerNight])
 }
 
 model Amenity {
-  id   String @id @default(uuid())
-  name String
+  id         String     @id @default(uuid())
+  name       String
+  properties Property[]
 }
 
 model Host {
@@ -80,13 +87,13 @@ model Host {
   pictureUrl  String
   aboutMe     String
   listings    Property[]
+
+  @@index([name])
 }
 
-// Implement the following collections and relationships in the Prisma Model:
-// Property
-// amenities[] - (many-to-many)
-// bookings[] (1-to-many) done
-// reviews[] (1-to-many) done
-
-// Host
-// listings[] (1-to-many) with Property done
+// @@index([index]) is based on:
+// /properties?location=Amsterdam&pricePerNight=88&amenities=Wifi
+// /bookings?userId=ee4b8bc3-4e54-4e0a-962d-d5a5570db4e7
+// /users?username=PietVanMolen username is a unique value this automatically creates an unique index
+// /users?email=piet@vanmolen.nl 
+// /hosts?name=Linda+Pollen
