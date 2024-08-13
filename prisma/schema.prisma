@@ -9,8 +9,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL") LATER FOR MIGRATION
 }
@@ -18,3 +18,75 @@ datasource db {
 // npx prisma format .
 // npm install @prisma/client
 
+model User {
+  id          String @id @default(uuid())
+  username    String @unique
+  password    String
+  name        String
+  email       String
+  phoneNumber String
+  pictureUrl  String
+}
+
+model Booking {
+  id             String   @id @default(uuid())
+  userId         String // FK
+  propertyId     String // FK
+  checkInDate    DateTime
+  checkOutDate   DateTime
+  numberOfGuests Int
+  totalPrice     Int
+  bookingStatus  String
+  Property       Property @relation(fields: [propertyId], references: [id])
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  userId     String // FK
+  propertyId String // FK
+  rating     Int
+  comment    String
+  Property   Property @relation(fields: [propertyId], references: [id])
+}
+
+model Property {
+  id            String    @id @default(uuid())
+  hostId        String // FK
+  title         String
+  description   String
+  location      String
+  pricePerNight Decimal   @db.Decimal(10, 2)
+  bedroomCount  Int
+  bathRoomCount Int
+  maxGuestCount Int
+  rating        Int
+  host          Host      @relation(fields: [hostId], references: [id])
+  bookings      Booking[]
+  reviews       Review[]
+}
+
+model Amenity {
+  id   String @id @default(uuid())
+  name String
+}
+
+model Host {
+  id          String     @id @default(uuid())
+  username    String     @unique
+  password    String
+  name        String
+  email       String
+  phoneNumber String
+  pictureUrl  String
+  aboutMe     String
+  listings    Property[]
+}
+
+// Implement the following collections and relationships in the Prisma Model:
+// Property
+// amenities[] - (many-to-many)
+// bookings[] (1-to-many) done
+// reviews[] (1-to-many) done
+
+// Host
+// listings[] (1-to-many) with Property done
