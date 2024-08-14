@@ -10,7 +10,12 @@
       "bathRoomCount": 2,
       "maxGuestCount": 5,
       "hostId": "f1234567-89ab-cdef-0123-456789abcdef",
-      "rating": 5
+      "rating": 5,
+      "amenityIds": [
+        "l4567890-12gh-ijkl-1234-56789abcdef0",
+        "o7890123-45lm-nopq-4567-89abcdef0123",
+        "q9012345-67no-pqrs-6789-abcdef012345"
+      ]
     },
     {
       "id": "h0123456-78f0-1234-5678-9abcdef01234",
@@ -22,7 +27,12 @@
       "bathRoomCount": 2,
       "maxGuestCount": 4,
       "hostId": "e2345678-90bc-def0-0123-456789abcdef",
-      "rating": 4
+      "rating": 4,
+      "amenityIds": [
+        "l4567890-12gh-ijkl-1234-56789abcdef0",
+        "t2345678-90qr-stuv-90bc-def012345678",
+        "u3456789-01rs-tuvw-01cd-ef0123456789"
+      ]
     },
     {
       "id": "i1234567-89f0-1234-5678-9abcdef01234",
@@ -34,7 +44,12 @@
       "bathRoomCount": 1,
       "maxGuestCount": 3,
       "hostId": "d3456789-01cd-def0-1234-56789abcdef0",
-      "rating": 5
+      "rating": 5,
+      "amenityIds": [
+        "l4567890-12gh-ijkl-1234-56789abcdef0",
+        "n6789012-34kl-mnop-3456-789abcdef012",
+        "q9012345-67no-pqrs-6789-abcdef012345"
+      ]
     },
     {
       "id": "j2345678-90f1-2345-6789-abcdef012345",
@@ -46,7 +61,14 @@
       "bathRoomCount": 3,
       "maxGuestCount": 8,
       "hostId": "c4567890-12de-f012-3456-789abcdef012",
-      "rating": 5
+      "rating": 5,
+      "amenityIds": [
+        "l4567890-12gh-ijkl-1234-56789abcdef0",
+        "o7890123-45lm-nopq-4567-89abcdef0123",
+        "n6789012-34kl-mnop-3456-789abcdef012",
+        "t2345678-90qr-stuv-90bc-def012345678",
+        "u3456789-01rs-tuvw-01cd-ef0123456789"
+      ]
     },
     {
       "id": "k3456789-01f2-3456-789a-bcdef0123456",
@@ -58,7 +80,12 @@
       "bathRoomCount": 2,
       "maxGuestCount": 6,
       "hostId": "b5678901-23ef-0123-4567-89abcdef0123",
-      "rating": 4
+      "rating": 4,
+      "amenityIds": [
+        "o7890123-45lm-nopq-4567-89abcdef0123",
+        "q9012345-67no-pqrs-6789-abcdef012345",
+        "r0123456-78op-qrst-789a-bcdef0123456"
+      ]
     }
   ]
 }

@@ -16,13 +16,13 @@ datasource db {
 }
 
 model User {
-  id          String @id @default(uuid())
-  username    String @unique
-  password    String
-  name        String
-  email       String
-  phoneNumber String
-  pictureUrl  String
+  id             String @id @default(uuid())
+  username       String @unique
+  password       String
+  name           String
+  email          String
+  phoneNumber    String
+  profilePicture String
 
   @@index([email])
 }
@@ -31,8 +31,8 @@ model Booking {
   id             String   @id @default(uuid())
   userId         String // FK
   propertyId     String // FK
-  checkInDate    DateTime
-  checkOutDate   DateTime
+  checkinDate    DateTime
+  checkoutDate   DateTime
   numberOfGuests Int
   totalPrice     Int
   bookingStatus  String
@@ -64,7 +64,7 @@ model Property {
   host          Host      @relation(fields: [hostId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   bookings      Booking[]
   reviews       Review[]
-  amenities     Amenity[]
+  amenities     Amenity[] @relation("AmenityToProperty")
 
   @@index([location, pricePerNight])
 }
@@ -72,19 +72,19 @@ model Property {
 model Amenity {
   id         String     @id @default(uuid())
   name       String
-  properties Property[]
+  properties Property[] @relation("AmenityToProperty")
 }
 
 model Host {
-  id          String     @id @default(uuid())
-  username    String     @unique
-  password    String
-  name        String
-  email       String
-  phoneNumber String
-  pictureUrl  String
-  aboutMe     String
-  listings    Property[]
+  id             String     @id @default(uuid())
+  username       String     @unique
+  password       String
+  name           String
+  email          String
+  phoneNumber    String
+  profilePicture String
+  aboutMe        String
+  listings       Property[]
 
   @@index([name])
 }
