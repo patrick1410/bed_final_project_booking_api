@@ -34,7 +34,7 @@ model Booking {
   checkinDate    DateTime
   checkoutDate   DateTime
   numberOfGuests Int
-  totalPrice     Int
+  totalPrice     Decimal   @db.Decimal(10, 2)
   bookingStatus  String
   Property       Property @relation(fields: [propertyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 

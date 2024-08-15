@@ -2,6 +2,8 @@
 import * as Sentry from "@sentry/node";
 import express from "express";
 import "dotenv/config";
+import usersRoute from "./routes/usersRoute.js";
+import bookingsRoute from "./routes/bookingsRoute.js";
 
 const app = express();
 
@@ -30,6 +32,8 @@ app.use(express.json());
 // LOGGER
 
 // ROUTES
+app.use("/users", usersRoute);
+app.use("/bookings", bookingsRoute);
 
 // SENTRY ERROR HANDLER
 app.use(Sentry.Handlers.errorHandler());
