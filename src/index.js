@@ -1,27 +1,38 @@
 // IMPORTS
+import * as Sentry from "@sentry/node";
 import express from "express";
+import "dotenv/config";
 
 const app = express();
 
 // SENTRY INIT
 
-// Sentry.init({
-//   dsn: process.env.SENTRY_DSN,
-//   integrations: [nodeProfilingIntegration()],
-//   // Performance Monitoring
-//   tracesSampleRate: 1.0, //  Capture 100% of the transactions
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
 
-//   // Set sampling rate for profiling - this is relative to tracesSampleRate
-//   profilesSampleRate: 1.0,
-// });
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Sentry.Integrations.Express({ app }),
 
-// app.use(express.json());
+    // Automatically instrument Node.js libraries and frameworks
+    // ...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations(),
+  ],
+
+  // Tracing
+  tracesSampleRate: 1.0, //  Capture 100% of the transactions
+});
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
+app.use(express.json());
 
 // LOGGER
 
 // ROUTES
 
-// SENTRY ERROR HANDLER?
+// SENTRY ERROR HANDLER
+app.use(Sentry.Handlers.errorHandler());
 
 // ERROR HANDLER
 
