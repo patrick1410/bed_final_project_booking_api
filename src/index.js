@@ -5,11 +5,14 @@ import "dotenv/config";
 import { log } from "./middleware/logMiddleware.js";
 import usersRoute from "./routes/usersRoute.js";
 import bookingsRoute from "./routes/bookingsRoute.js";
+import hostsRoute from "./routes/hostsRoute.js";
+import propertiesRoute from "./routes/propertiesRoute.js";
+import reviewsRoute from "./routes/reviewsRoute.js";
+import amenitiesRoute from "./routes/amenitiesRoute.js";
 
 const app = express();
 
 // SENTRY INIT
-
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
 
@@ -36,6 +39,10 @@ app.use(log);
 // ROUTES
 app.use("/users", usersRoute);
 app.use("/bookings", bookingsRoute);
+app.use("/hosts", hostsRoute);
+app.use("/properties", propertiesRoute);
+app.use("/reviews", reviewsRoute);
+app.use("/amenities", amenitiesRoute);
 
 // SENTRY ERROR HANDLER
 app.use(Sentry.Handlers.errorHandler());
