@@ -2,6 +2,7 @@
 import * as Sentry from "@sentry/node";
 import express from "express";
 import "dotenv/config";
+import { log } from "./middleware/logMiddleware.js";
 import usersRoute from "./routes/usersRoute.js";
 import bookingsRoute from "./routes/bookingsRoute.js";
 
@@ -30,6 +31,7 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json());
 
 // LOGGER
+app.use(log);
 
 // ROUTES
 app.use("/users", usersRoute);
