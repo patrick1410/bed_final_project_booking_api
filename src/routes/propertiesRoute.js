@@ -1,6 +1,7 @@
 import express from "express";
 
 import { getProperties } from "../services/properties/getProperties.js";
+import { getPropertyById } from "../services/properties/getPropertyById.js";
 
 const router = express.Router();
 
@@ -9,6 +10,23 @@ router.get("/", async (req, res, next) => {
     const { location, pricePerNight, amenities } = req.query;
     const properties = await getProperties(location, pricePerNight, amenities);
     res.status(200).json(properties);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const property = await getPropertyById(id);
+
+    if (!property) {
+      res
+        .status(404)
+        .json({ message: `Property with id ${id} was not found!` });
+    } else {
+      res.status(200).json(property);
+    }
   } catch (error) {
     next(error);
   }

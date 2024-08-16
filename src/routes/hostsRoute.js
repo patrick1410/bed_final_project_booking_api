@@ -1,6 +1,7 @@
 import express from "express";
 
 import { getHosts } from "../services/hosts/getHosts.js";
+import { getHostById } from "../services/hosts/getHostById.js";
 
 const router = express.Router();
 
@@ -9,6 +10,21 @@ router.get("/", async (req, res, next) => {
     const { name } = req.query;
     const hosts = await getHosts(name);
     res.status(200).json(hosts);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const host = await getHostById(id);
+
+    if (!host) {
+      res.status(404).json({ message: `Host with id ${id} was not found!` });
+    } else {
+      res.status(200).json(host);
+    }
   } catch (error) {
     next(error);
   }
