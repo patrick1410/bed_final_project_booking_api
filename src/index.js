@@ -9,6 +9,7 @@ import hostsRoute from "./routes/hostsRoute.js";
 import propertiesRoute from "./routes/propertiesRoute.js";
 import reviewsRoute from "./routes/reviewsRoute.js";
 import amenitiesRoute from "./routes/amenitiesRoute.js";
+import loginRouter from "./routes/loginRoute.js";
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use("/hosts", hostsRoute);
 app.use("/properties", propertiesRoute);
 app.use("/reviews", reviewsRoute);
 app.use("/amenities", amenitiesRoute);
+app.use("/login", loginRouter);
 
 // SENTRY ERROR HANDLER
 app.use(Sentry.Handlers.errorHandler());
