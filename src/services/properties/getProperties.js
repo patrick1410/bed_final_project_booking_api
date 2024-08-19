@@ -30,6 +30,8 @@ export const getProperties = async (location, pricePerNight, amenities) => {
     },
     include: {
       amenities: true, // Include amenities in the response
+      reviews: true,
+      bookings: true,
     },
   });
 

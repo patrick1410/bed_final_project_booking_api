@@ -6,6 +6,8 @@ export const getPropertyById = async (id) => {
     where: { id },
     include: {
       amenities: true, // Include amenities in the response
+      reviews: true,
+      bookings: true,
     },
   });
 

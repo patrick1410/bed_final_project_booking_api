@@ -8,6 +8,9 @@ export const getHosts = async (name) => {
         contains: name,
       },
     },
+    include: {
+      listings: true,
+    },
   });
 
   return hosts;
