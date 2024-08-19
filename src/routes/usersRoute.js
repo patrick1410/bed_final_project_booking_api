@@ -36,6 +36,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const { username, password, name, email, phoneNumber, profilePicture } =
       req.body;
+
     const newUser = await createUser(
       username,
       password,
