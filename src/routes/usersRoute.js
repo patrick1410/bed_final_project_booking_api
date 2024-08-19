@@ -2,6 +2,7 @@ import express from "express";
 
 import { getUsers } from "../services/users/getUsers.js";
 import { getUserById } from "../services/users/getUserById.js";
+import { createUser } from "../services/users/createUser.js";
 
 const router = express.Router();
 
@@ -25,6 +26,24 @@ router.get("/:id", async (req, res, next) => {
     } else {
       res.status(200).json(user);
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/", async (req, res, next) => {
+  try {
+    const { username, password, name, email, phoneNumber, profilePicture } =
+      req.body;
+    const newUser = await createUser(
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture
+    );
+    res.status(201).json(newUser);
   } catch (error) {
     next(error);
   }
