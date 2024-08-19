@@ -2,6 +2,7 @@ import express from "express";
 
 import { getHosts } from "../services/hosts/getHosts.js";
 import { getHostById } from "../services/hosts/getHostById.js";
+import { createHost } from "../services/hosts/createHost.js";
 
 const router = express.Router();
 
@@ -25,6 +26,32 @@ router.get("/:id", async (req, res, next) => {
     } else {
       res.status(200).json(host);
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/", async (req, res, next) => {
+  try {
+    const {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe,
+    } = req.body;
+    const newHost = await createHost(
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe
+    );
+    res.status(201).json(newHost);
   } catch (error) {
     next(error);
   }
