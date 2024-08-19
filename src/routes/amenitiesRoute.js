@@ -2,6 +2,7 @@ import express from "express";
 
 import { getAmenities } from "../services/amenities/getAmenities.js";
 import { getAmenityById } from "../services/amenities/getAmenityById.js";
+import { createAmenity } from "../services/amenities/createAmenity.js";
 
 const router = express.Router();
 
@@ -24,6 +25,16 @@ router.get("/:id", async (req, res, next) => {
     } else {
       res.status(200).json(amenity);
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/", async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    const newAmenity = await createAmenity(name);
+    res.status(201).json(newAmenity);
   } catch (error) {
     next(error);
   }
