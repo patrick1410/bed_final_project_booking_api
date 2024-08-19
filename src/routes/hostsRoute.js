@@ -1,5 +1,6 @@
 import express from "express";
 
+import authMiddleware from "../middleware/auth.js";
 import { getHosts } from "../services/hosts/getHosts.js";
 import { getHostById } from "../services/hosts/getHostById.js";
 import { createHost } from "../services/hosts/createHost.js";
@@ -31,7 +32,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const {
       username,

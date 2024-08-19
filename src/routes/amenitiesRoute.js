@@ -1,5 +1,6 @@
 import express from "express";
 
+import authMiddleware from "../middleware/auth.js";
 import { getAmenities } from "../services/amenities/getAmenities.js";
 import { getAmenityById } from "../services/amenities/getAmenityById.js";
 import { createAmenity } from "../services/amenities/createAmenity.js";
@@ -30,7 +31,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const { name } = req.body;
     const newAmenity = await createAmenity(name);
