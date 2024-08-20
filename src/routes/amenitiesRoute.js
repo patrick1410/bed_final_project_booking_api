@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getAmenities } from "../services/amenities/getAmenities.js";
 import { getAmenityById } from "../services/amenities/getAmenityById.js";
 import { createAmenity } from "../services/amenities/createAmenity.js";
+import { deleteAmenity } from "../services/amenities/deleteAmenity.js";
 
 const router = express.Router();
 
@@ -36,6 +37,25 @@ router.post("/", authMiddleware, async (req, res, next) => {
     const { name } = req.body;
     const newAmenity = await createAmenity(name);
     res.status(201).json(newAmenity);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const amenity = await deleteAmenity(id);
+
+    if (amenity) {
+      res.status(200).send({
+        message: `Amenity with id ${id} was deleted!`,
+      });
+    } else {
+      res.status(404).json({
+        message: `Amenity with id ${id} was not found!`,
+      });
+    }
   } catch (error) {
     next(error);
   }
