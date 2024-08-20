@@ -10,6 +10,7 @@ import propertiesRoute from "./routes/propertiesRoute.js";
 import reviewsRoute from "./routes/reviewsRoute.js";
 import amenitiesRoute from "./routes/amenitiesRoute.js";
 import loginRouter from "./routes/loginRoute.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use("/login", loginRouter);
 app.use(Sentry.Handlers.errorHandler());
 
 // ERROR HANDLER
+app.use(errorHandler);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
