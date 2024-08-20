@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getHosts } from "../services/hosts/getHosts.js";
 import { getHostById } from "../services/hosts/getHostById.js";
 import { createHost } from "../services/hosts/createHost.js";
+import { deleteHost } from "../services/hosts/deleteHost.js";
 
 const router = express.Router();
 
@@ -53,6 +54,25 @@ router.post("/", authMiddleware, async (req, res, next) => {
       aboutMe
     );
     res.status(201).json(newHost);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const host = await deleteHost(id);
+
+    if (host) {
+      res.status(200).send({
+        message: `Host with id ${id} was deleted!`,
+      });
+    } else {
+      res.status(404).json({
+        message: `Host with id ${id} was not found!`,
+      });
+    }
   } catch (error) {
     next(error);
   }
