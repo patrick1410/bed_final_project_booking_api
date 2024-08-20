@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getUsers } from "../services/users/getUsers.js";
 import { getUserById } from "../services/users/getUserById.js";
 import { createUser } from "../services/users/createUser.js";
+import { deleteUser } from "../services/users/deleteUser.js";
 
 const router = express.Router();
 
@@ -46,6 +47,25 @@ router.post("/", authMiddleware, async (req, res, next) => {
       profilePicture
     );
     res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await deleteUser(id);
+
+    if (user) {
+      res.status(200).send({
+        message: `User with id ${id} was deleted!`,
+      });
+    } else {
+      res.status(404).json({
+        message: `User with id ${id} was not found!`,
+      });
+    }
   } catch (error) {
     next(error);
   }
