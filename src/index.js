@@ -10,6 +10,7 @@ import propertiesRoute from "./routes/propertiesRoute.js";
 import reviewsRoute from "./routes/reviewsRoute.js";
 import amenitiesRoute from "./routes/amenitiesRoute.js";
 import loginRouter from "./routes/loginRoute.js";
+import notFoundErrorHandler from "./middleware/notFoundErrorHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
@@ -50,8 +51,9 @@ app.use("/login", loginRouter);
 // SENTRY ERROR HANDLER
 app.use(Sentry.Handlers.errorHandler());
 
-// ERROR HANDLER
-app.use(errorHandler);
+// CUSTOM ERROR HANDLERS
+app.use(notFoundErrorHandler); // 404
+app.use(errorHandler); // 500
 
 app.get("/", (req, res) => {
   res.send("Hello world!");

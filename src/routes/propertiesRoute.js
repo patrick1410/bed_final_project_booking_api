@@ -5,6 +5,7 @@ import { getProperties } from "../services/properties/getProperties.js";
 import { getPropertyById } from "../services/properties/getPropertyById.js";
 import { createProperty } from "../services/properties/createProperty.js";
 import { deleteProperty } from "../services/properties/deleteProperty.js";
+import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
 
@@ -24,9 +25,7 @@ router.get("/:id", async (req, res, next) => {
     const property = await getPropertyById(id);
 
     if (!property) {
-      res
-        .status(404)
-        .json({ message: `Property with id ${id} was not found!` });
+      throw new NotFoundError("Property", id);
     } else {
       res.status(200).json(property);
     }
@@ -78,9 +77,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
         message: `Property with id ${id} was deleted!`,
       });
     } else {
-      res.status(404).json({
-        message: `Property with id ${id} was not found!`,
-      });
+      throw new NotFoundError("Property", id);
     }
   } catch (error) {
     next(error);

@@ -5,6 +5,7 @@ import { getReviews } from "../services/reviews/getReviews.js";
 import { getReviewById } from "../services/reviews/getReviewById.js";
 import { createReview } from "../services/reviews/createReview.js";
 import { deleteReview } from "../services/reviews/deleteReview.js";
+import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get("/:id", async (req, res, next) => {
     const review = await getReviewById(id);
 
     if (!review) {
-      res.status(404).json({ message: `Review with id ${id} was not found!` });
+      throw new NotFoundError("Review", id);
     } else {
       res.status(200).json(review);
     }
@@ -53,9 +54,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
         message: `Review with id ${id} was deleted!`,
       });
     } else {
-      res.status(404).json({
-        message: `Review with id ${id} was not found!`,
-      });
+      throw new NotFoundError("Review", id);
     }
   } catch (error) {
     next(error);

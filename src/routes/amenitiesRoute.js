@@ -5,6 +5,7 @@ import { getAmenities } from "../services/amenities/getAmenities.js";
 import { getAmenityById } from "../services/amenities/getAmenityById.js";
 import { createAmenity } from "../services/amenities/createAmenity.js";
 import { deleteAmenity } from "../services/amenities/deleteAmenity.js";
+import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
 
@@ -17,13 +18,28 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// router.get("/:id", async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const amenity = await getAmenityById(id);
+
+//     if (!amenity) {
+//       res.status(404).json({ message: `Amenity with id ${id} was not found!` });
+//     } else {
+//       res.status(200).json(amenity);
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const amenity = await getAmenityById(id);
 
     if (!amenity) {
-      res.status(404).json({ message: `Amenity with id ${id} was not found!` });
+      throw new NotFoundError("Amenity", id);
     } else {
       res.status(200).json(amenity);
     }
@@ -52,9 +68,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
         message: `Amenity with id ${id} was deleted!`,
       });
     } else {
-      res.status(404).json({
-        message: `Amenity with id ${id} was not found!`,
-      });
+      throw new NotFoundError("Amenity", id);
     }
   } catch (error) {
     next(error);

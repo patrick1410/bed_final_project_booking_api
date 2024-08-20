@@ -5,6 +5,7 @@ import { getBookings } from "../services/bookings/getBookings.js";
 import { getBookingById } from "../services/bookings/getBookingById.js";
 import { createBooking } from "../services/bookings/createBooking.js";
 import { deleteBooking } from "../services/bookings/deleteBooking.js";
+import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.get("/:id", async (req, res, next) => {
     const booking = await getBookingById(id);
 
     if (!booking) {
-      res.status(404).json({ message: `Booking with id ${id} was not found!` });
+      throw new NotFoundError("Booking", id);
     } else {
       res.status(200).json(booking);
     }
@@ -70,9 +71,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
         message: `Booking with id ${id} was deleted!`,
       });
     } else {
-      res.status(404).json({
-        message: `Booking with id ${id} was not found!`,
-      });
+      throw new NotFoundError("Booking", id);
     }
   } catch (error) {
     next(error);

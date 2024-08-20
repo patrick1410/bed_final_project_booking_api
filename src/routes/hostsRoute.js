@@ -5,6 +5,7 @@ import { getHosts } from "../services/hosts/getHosts.js";
 import { getHostById } from "../services/hosts/getHostById.js";
 import { createHost } from "../services/hosts/createHost.js";
 import { deleteHost } from "../services/hosts/deleteHost.js";
+import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.get("/:id", async (req, res, next) => {
     const host = await getHostById(id);
 
     if (!host) {
-      res.status(404).json({ message: `Host with id ${id} was not found!` });
+      throw new NotFoundError("Host", id);
     } else {
       res.status(200).json(host);
     }
@@ -69,9 +70,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
         message: `Host with id ${id} was deleted!`,
       });
     } else {
-      res.status(404).json({
-        message: `Host with id ${id} was not found!`,
-      });
+      throw new NotFoundError("Host", id);
     }
   } catch (error) {
     next(error);

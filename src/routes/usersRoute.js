@@ -5,6 +5,7 @@ import { getUsers } from "../services/users/getUsers.js";
 import { getUserById } from "../services/users/getUserById.js";
 import { createUser } from "../services/users/createUser.js";
 import { deleteUser } from "../services/users/deleteUser.js";
+import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.get("/:id", async (req, res, next) => {
     const user = await getUserById(id);
 
     if (!user) {
-      res.status(404).json({ message: `User with id ${id} was not found!` });
+      throw new NotFoundError("User", id);
     } else {
       res.status(200).json(user);
     }
@@ -62,9 +63,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
         message: `User with id ${id} was deleted!`,
       });
     } else {
-      res.status(404).json({
-        message: `User with id ${id} was not found!`,
-      });
+      throw new NotFoundError("User", id);
     }
   } catch (error) {
     next(error);
