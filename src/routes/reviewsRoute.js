@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getReviews } from "../services/reviews/getReviews.js";
 import { getReviewById } from "../services/reviews/getReviewById.js";
 import { createReview } from "../services/reviews/createReview.js";
+import { updateReviewById } from "../services/reviews/updateReviewById.js";
 import { deleteReview } from "../services/reviews/deleteReview.js";
 import NotFoundError from "../errors/notFoundError.js";
 
@@ -39,6 +40,24 @@ router.post("/", authMiddleware, async (req, res, next) => {
 
     const newReview = await createReview(userId, propertyId, rating, comment);
     res.status(201).json(newReview);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { rating, comment } = req.body;
+    const review = await updateReviewById(id, { rating, comment });
+
+    if (review) {
+      res.status(200).send({
+        message: `Review with id ${id} was updated!`,
+      });
+    } else {
+      throw new NotFoundError("Review", id);
+    }
   } catch (error) {
     next(error);
   }
