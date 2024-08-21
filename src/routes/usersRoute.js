@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getUsers } from "../services/users/getUsers.js";
 import { getUserById } from "../services/users/getUserById.js";
 import { createUser } from "../services/users/createUser.js";
+import { updateUserById } from "../services/users/updateUserById.js";
 import { deleteUser } from "../services/users/deleteUser.js";
 import NotFoundError from "../errors/notFoundError.js";
 
@@ -48,6 +49,32 @@ router.post("/", authMiddleware, async (req, res, next) => {
       profilePicture
     );
     res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { username, password, name, email, phoneNumber, profilePicture } =
+      req.body;
+    const user = await updateUserById(id, {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+    });
+
+    if (user) {
+      res.status(200).send({
+        message: `User with id ${id} was updated!`,
+      });
+    } else {
+      throw new NotFoundError("User", id);
+    }
   } catch (error) {
     next(error);
   }
