@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getHosts } from "../services/hosts/getHosts.js";
 import { getHostById } from "../services/hosts/getHostById.js";
 import { createHost } from "../services/hosts/createHost.js";
+import { updateHostById } from "../services/hosts/updateHostById.js";
 import { deleteHost } from "../services/hosts/deleteHost.js";
 import NotFoundError from "../errors/notFoundError.js";
 
@@ -55,6 +56,40 @@ router.post("/", authMiddleware, async (req, res, next) => {
       aboutMe
     );
     res.status(201).json(newHost);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe,
+    } = req.body;
+    const host = await updateHostById(id, {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe,
+    });
+
+    if (host) {
+      res.status(200).send({
+        message: `Host with id ${id} was updated!`,
+      });
+    } else {
+      throw new NotFoundError("Host", id);
+    }
   } catch (error) {
     next(error);
   }
