@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getBookings } from "../services/bookings/getBookings.js";
 import { getBookingById } from "../services/bookings/getBookingById.js";
 import { createBooking } from "../services/bookings/createBooking.js";
+import { updateBookingById } from "../services/bookings/updateBookingById.js";
 import { deleteBooking } from "../services/bookings/deleteBooking.js";
 import NotFoundError from "../errors/notFoundError.js";
 
@@ -56,6 +57,36 @@ router.post("/", authMiddleware, async (req, res, next) => {
       bookingStatus
     );
     res.status(201).json(newBooking);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      checkinDate,
+      checkoutDate,
+      numberOfGuests,
+      totalPrice,
+      bookingStatus,
+    } = req.body;
+    const booking = await updateBookingById(id, {
+      checkinDate,
+      checkoutDate,
+      numberOfGuests,
+      totalPrice,
+      bookingStatus,
+    });
+
+    if (booking) {
+      res.status(200).send({
+        message: `Booking with id ${id} was updated!`,
+      });
+    } else {
+      throw new NotFoundError("Booking", id);
+    }
   } catch (error) {
     next(error);
   }
