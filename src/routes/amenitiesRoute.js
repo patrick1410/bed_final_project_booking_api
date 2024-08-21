@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getAmenities } from "../services/amenities/getAmenities.js";
 import { getAmenityById } from "../services/amenities/getAmenityById.js";
 import { createAmenity } from "../services/amenities/createAmenity.js";
+import { updateAmenityById } from "../services/amenities/updateAmenityById.js";
 import { deleteAmenity } from "../services/amenities/deleteAmenity.js";
 import NotFoundError from "../errors/notFoundError.js";
 
@@ -53,6 +54,24 @@ router.post("/", authMiddleware, async (req, res, next) => {
     const { name } = req.body;
     const newAmenity = await createAmenity(name);
     res.status(201).json(newAmenity);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const amenity = await updateAmenityById(id, { name });
+
+    if (amenity) {
+      res.status(200).send({
+        message: `Amenity with id ${id} was updated!`,
+      });
+    } else {
+      throw new NotFoundError("Amenity", id);
+    }
   } catch (error) {
     next(error);
   }
