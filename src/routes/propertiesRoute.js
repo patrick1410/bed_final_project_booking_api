@@ -36,45 +36,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:id", authMiddleware, async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const {
-      title,
-      description,
-      location,
-      pricePerNight,
-      bedroomCount,
-      bathRoomCount,
-      maxGuestCount,
-      rating,
-      amenityIds,
-    } = req.body;
-
-    const property = await updatePropertyById(id, {
-      title,
-      description,
-      location,
-      pricePerNight,
-      bedroomCount,
-      bathRoomCount,
-      maxGuestCount,
-      rating,
-      amenityIds,
-    });
-
-    if (property) {
-      res.status(200).send({
-        message: `Property with id ${id} was updated!`,
-      });
-    } else {
-      throw new NotFoundError("Property", id);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const {
@@ -126,6 +87,45 @@ router.post("/", authMiddleware, async (req, res, next) => {
       amenityIds
     );
     res.status(201).json(newProperty);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      rating,
+      amenityIds,
+    } = req.body;
+
+    const property = await updatePropertyById(id, {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      rating,
+      amenityIds,
+    });
+
+    if (property) {
+      res.status(200).send({
+        message: `Property with id ${id} was updated!`,
+      });
+    } else {
+      throw new NotFoundError("Property", id);
+    }
   } catch (error) {
     next(error);
   }
