@@ -55,7 +55,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
     const { name } = req.body;
 
     if (!name) {
-      throw new BadRequestError("Please provide a name");
+      throw new BadRequestError("Please provide a name!");
     }
 
     const newAmenity = await createAmenity(name);

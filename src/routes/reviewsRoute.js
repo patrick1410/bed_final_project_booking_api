@@ -6,6 +6,7 @@ import { getReviewById } from "../services/reviews/getReviewById.js";
 import { createReview } from "../services/reviews/createReview.js";
 import { updateReviewById } from "../services/reviews/updateReviewById.js";
 import { deleteReview } from "../services/reviews/deleteReview.js";
+import BadRequestError from "../errors/badRequestError.js";
 import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
@@ -37,6 +38,14 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const { userId, propertyId, rating, comment } = req.body;
+
+    if (!userId || !propertyId || !comment) {
+      throw new BadRequestError("Please provide all fields!");
+    }
+
+    if (typeof rating !== "number" || rating <= 0 || rating > 5) {
+      throw new BadRequestError("Rating should be a number between 1 and 5!");
+    }
 
     const newReview = await createReview(userId, propertyId, rating, comment);
     res.status(201).json(newReview);
