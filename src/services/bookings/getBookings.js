@@ -10,5 +10,10 @@ export const getBookings = async (userId) => {
     },
   });
 
-  return bookings;
+  const formattedBookings = bookings.map((booking) => ({
+    ...booking,
+    totalPrice: Number(booking.totalPrice), // Format totalPrice to number
+  }));
+
+  return formattedBookings;
 };

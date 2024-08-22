@@ -35,5 +35,10 @@ export const getProperties = async (location, pricePerNight, amenities) => {
     },
   });
 
-  return properties;
+  const formattedProperties = properties.map((property) => ({
+    ...property,
+    pricePerNight: Number(property.pricePerNight), // Format pricePerNight to number
+  }));
+
+  return formattedProperties;
 };
