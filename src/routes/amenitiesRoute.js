@@ -20,21 +20,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// router.get("/:id", async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const amenity = await getAmenityById(id);
-
-//     if (!amenity) {
-//       res.status(404).json({ message: `Amenity with id ${id} was not found!` });
-//     } else {
-//       res.status(200).json(amenity);
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -59,7 +44,6 @@ router.post("/", authMiddleware, async (req, res, next) => {
     }
 
     const newAmenity = await createAmenity(name);
-
     res.status(201).json(newAmenity);
   } catch (error) {
     next(error);

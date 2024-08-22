@@ -6,6 +6,7 @@ import { getHostById } from "../services/hosts/getHostById.js";
 import { createHost } from "../services/hosts/createHost.js";
 import { updateHostById } from "../services/hosts/updateHostById.js";
 import { deleteHost } from "../services/hosts/deleteHost.js";
+import BadRequestError from "../errors/badRequestError.js";
 import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
@@ -46,6 +47,19 @@ router.post("/", authMiddleware, async (req, res, next) => {
       profilePicture,
       aboutMe,
     } = req.body;
+
+    if (
+      !username ||
+      !password ||
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !profilePicture ||
+      !aboutMe
+    ) {
+      throw new BadRequestError("Please provide all fields!");
+    }
+
     const newHost = await createHost(
       username,
       password,
@@ -55,6 +69,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       profilePicture,
       aboutMe
     );
+
     res.status(201).json(newHost);
   } catch (error) {
     next(error);
