@@ -6,6 +6,7 @@ import { getUserById } from "../services/users/getUserById.js";
 import { createUser } from "../services/users/createUser.js";
 import { updateUserById } from "../services/users/updateUserById.js";
 import { deleteUser } from "../services/users/deleteUser.js";
+import BadRequestError from "../errors/badRequestError.js";
 import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
@@ -40,6 +41,17 @@ router.post("/", authMiddleware, async (req, res, next) => {
     const { username, password, name, email, phoneNumber, profilePicture } =
       req.body;
 
+    if (
+      !username ||
+      !password ||
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !profilePicture
+    ) {
+      throw new BadRequestError("Please provide all fields!");
+    }
+
     const newUser = await createUser(
       username,
       password,
@@ -48,6 +60,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       phoneNumber,
       profilePicture
     );
+
     res.status(201).json(newUser);
   } catch (error) {
     next(error);

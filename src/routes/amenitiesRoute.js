@@ -53,13 +53,14 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const { name } = req.body;
-    const newAmenity = await createAmenity(name);
 
     if (!name) {
       throw new BadRequestError("Please provide a name");
-    } else {
-      res.status(201).json(newAmenity);
     }
+
+    const newAmenity = await createAmenity(name);
+
+    res.status(201).json(newAmenity);
   } catch (error) {
     next(error);
   }
