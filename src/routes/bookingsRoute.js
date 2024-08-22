@@ -6,6 +6,7 @@ import { getBookingById } from "../services/bookings/getBookingById.js";
 import { createBooking } from "../services/bookings/createBooking.js";
 import { updateBookingById } from "../services/bookings/updateBookingById.js";
 import { deleteBooking } from "../services/bookings/deleteBooking.js";
+import BadRequestError from "../errors/badRequestError.js";
 import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
@@ -47,6 +48,27 @@ router.post("/", authMiddleware, async (req, res, next) => {
       bookingStatus,
     } = req.body;
 
+    if (
+      !userId ||
+      !propertyId ||
+      !checkinDate ||
+      !checkoutDate ||
+      !bookingStatus
+    ) {
+      throw new BadRequestError("Please provide all fields!");
+    }
+
+    if (
+      typeof numberOfGuests !== "number" ||
+      numberOfGuests <= 0 ||
+      typeof totalPrice !== "number" ||
+      totalPrice <= 0
+    ) {
+      throw new BadRequestError(
+        "numberOfGuests and totalPrice should be a number above 0!"
+      );
+    }
+
     const newBooking = await createBooking(
       userId,
       propertyId,
@@ -56,6 +78,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       totalPrice,
       bookingStatus
     );
+
     res.status(201).json(newBooking);
   } catch (error) {
     next(error);
