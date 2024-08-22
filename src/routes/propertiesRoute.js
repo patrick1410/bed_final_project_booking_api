@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.js";
 import { getProperties } from "../services/properties/getProperties.js";
 import { getPropertyById } from "../services/properties/getPropertyById.js";
 import { createProperty } from "../services/properties/createProperty.js";
+import { updatePropertyById } from "../services/properties/updatePropertyById.js";
 import { deleteProperty } from "../services/properties/deleteProperty.js";
 import NotFoundError from "../errors/notFoundError.js";
 
@@ -28,6 +29,45 @@ router.get("/:id", async (req, res, next) => {
       throw new NotFoundError("Property", id);
     } else {
       res.status(200).json(property);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      rating,
+      amenityIds,
+    } = req.body;
+
+    const property = await updatePropertyById(id, {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      rating,
+      amenityIds,
+    });
+
+    if (property) {
+      res.status(200).send({
+        message: `Property with id ${id} was updated!`,
+      });
+    } else {
+      throw new NotFoundError("Property", id);
     }
   } catch (error) {
     next(error);
