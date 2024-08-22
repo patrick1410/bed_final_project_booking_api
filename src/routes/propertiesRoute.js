@@ -36,6 +36,62 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// router.post("/", authMiddleware, async (req, res, next) => {
+//   try {
+//     const {
+//       title,
+//       description,
+//       location,
+//       pricePerNight,
+//       bedroomCount,
+//       bathRoomCount,
+//       maxGuestCount,
+//       hostId,
+//       rating,
+//       amenityIds,
+//     } = req.body;
+
+//     if (!title || !description || !location || !hostId) {
+//       throw new BadRequestError("Please provide all fields!");
+//     }
+
+//     if (
+//       typeof pricePerNight !== "number" ||
+//       pricePerNight <= 0 ||
+//       typeof bedroomCount !== "number" ||
+//       bedroomCount <= 0 ||
+//       typeof bathRoomCount !== "number" ||
+//       bathRoomCount <= 0 ||
+//       typeof maxGuestCount !== "number" ||
+//       maxGuestCount <= 0
+//     ) {
+//       throw new BadRequestError(
+//         "pricePerNight, bedroomCount, bathRoomCount and maxGuestCount should be a number above 0!"
+//       );
+//     } // Convert pricePerNight to number!
+
+//     if (typeof rating !== "number" || rating <= 0 || rating > 5) {
+//       throw new BadRequestError("Rating should be a number between 1 and 5!");
+//     }
+
+//     const newProperty = await createProperty(
+//       title,
+//       description,
+//       location,
+//       pricePerNight,
+//       bedroomCount,
+//       bathRoomCount,
+//       maxGuestCount,
+//       hostId,
+//       rating,
+//       amenityIds
+//     );
+//     res.status(201).json(newProperty);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const {
@@ -48,7 +104,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       maxGuestCount,
       hostId,
       rating,
-      amenityIds,
+      amenityIds = [],
     } = req.body;
 
     if (!title || !description || !location || !hostId) {
@@ -68,7 +124,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       throw new BadRequestError(
         "pricePerNight, bedroomCount, bathRoomCount and maxGuestCount should be a number above 0!"
       );
-    } // Convert pricePerNight to number!
+    }
 
     if (typeof rating !== "number" || rating <= 0 || rating > 5) {
       throw new BadRequestError("Rating should be a number between 1 and 5!");
