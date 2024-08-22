@@ -10,6 +10,7 @@ import propertiesRoute from "./routes/propertiesRoute.js";
 import reviewsRoute from "./routes/reviewsRoute.js";
 import amenitiesRoute from "./routes/amenitiesRoute.js";
 import loginRouter from "./routes/loginRoute.js";
+import badRequestErrorHandler from "./middleware/badRequestErrorHandler.js";
 import notFoundErrorHandler from "./middleware/notFoundErrorHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -52,6 +53,7 @@ app.use("/login", loginRouter);
 app.use(Sentry.Handlers.errorHandler());
 
 // CUSTOM ERROR HANDLERS
+app.use(badRequestErrorHandler); // 400
 app.use(notFoundErrorHandler); // 404
 app.use(errorHandler); // 500
 

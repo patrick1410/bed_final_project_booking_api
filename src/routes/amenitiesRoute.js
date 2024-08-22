@@ -6,6 +6,7 @@ import { getAmenityById } from "../services/amenities/getAmenityById.js";
 import { createAmenity } from "../services/amenities/createAmenity.js";
 import { updateAmenityById } from "../services/amenities/updateAmenityById.js";
 import { deleteAmenity } from "../services/amenities/deleteAmenity.js";
+import BadRequestError from "../errors/badRequestError.js";
 import NotFoundError from "../errors/notFoundError.js";
 
 const router = express.Router();
@@ -53,7 +54,12 @@ router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const { name } = req.body;
     const newAmenity = await createAmenity(name);
-    res.status(201).json(newAmenity);
+
+    if (!name) {
+      throw new BadRequestError("Please provide a name");
+    } else {
+      res.status(201).json(newAmenity);
+    }
   } catch (error) {
     next(error);
   }
