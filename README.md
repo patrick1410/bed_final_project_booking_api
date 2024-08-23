@@ -98,4 +98,4 @@ The app allows users to:
 
 ## DB Diagram
 
-[Diagrams](https://dbdiagram.io/d/DB-diagram-booking_api-66bb60498b4bb5230effab5a)
+[Diagram](https://dbdiagram.io/d/DB-diagram-booking_api-66bb60498b4bb5230effab5a)
