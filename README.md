@@ -76,7 +76,7 @@ The models are built using Prisma and the data is read, modified, and deleted th
 <a href="https://prisma.io">
   <img width="122" height="24" src="http://made-with.prisma.io/indigo.svg" alt="Made with Prisma" />
 </a>
-<br/> <br/>
+<br/>
 
 ## User Stories
 
