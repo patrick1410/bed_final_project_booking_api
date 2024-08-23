@@ -47,11 +47,7 @@ async function main() {
   for (const property of properties) {
     await prisma.property.upsert({
       where: { id: property.id },
-      update: {
-        // amenities: {
-        //   connect: property.amenityIds.map((id) => ({ id })),
-        // },
-      },
+      update: {},
       create: {
         id: property.id,
         title: property.title,

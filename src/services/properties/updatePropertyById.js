@@ -6,7 +6,7 @@ export const updatePropertyById = async (id, updatedProperty) => {
 
     const { amenityIds, ...rest } = updatedProperty;
 
-    // Here we can't use updateMany() because we need to update the amenities field if it is passed
+    // We can't use updateMany(), because we need to update the amenities field if it is passed
     const property = await prisma.property.update({
       where: { id },
       data: {
@@ -22,9 +22,9 @@ export const updatePropertyById = async (id, updatedProperty) => {
     return property;
   } catch (error) {
     if (error.code === "P2025") {
-      // Handle the specific error for "Record not found."
+      // Return null if the property with the given ID was not found
       return null;
     }
-    throw error;
+    throw error; // Throw any other errors
   }
 };

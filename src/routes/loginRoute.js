@@ -9,7 +9,7 @@ router.post("/", async (req, res, next) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
-      throw new BadRequestError("Username and password are required!"); // Maybe change this later
+      throw new BadRequestError("Username and password are required!"); // Throw an error if username or password is missing
     }
 
     const token = await login(username, password);

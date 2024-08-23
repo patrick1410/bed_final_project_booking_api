@@ -6,10 +6,5 @@ export const getBookingById = async (id) => {
     where: { id },
   });
 
-  // const formattedBooking = {
-  //   ...booking,
-  //   totalPrice: Number(booking.totalPrice), // Format totalPrice to number THIS DID NOT PASS THE TEST SO IM GONNA REMOVE IT!
-  // };
-
   return booking;
 };
