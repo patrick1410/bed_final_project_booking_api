@@ -70,12 +70,12 @@ The models are built using Prisma and the data is read, modified, and deleted th
 <img align="left" alt="JavaScript" width="24px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png" />
 <img align="left" alt="Node.js" width="24px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" />
 <img align="left" alt="Express.js" width="24px" src="https://raw.githubusercontent.com/github/explore/main/topics/express/express.png" />
+<img align="left" alt="Git" width="24px" src="https://raw.githubusercontent.com/github/explore/main/topics/git/git.png" />
 <img align="left" alt="Supabase" width="24px" src="https://raw.githubusercontent.com/github/explore/main/topics/supabase/supabase.png" />
+<img align="left" alt="PostgreSQL" width="24px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/postgresql/postgresql.png" />
 <a href="https://prisma.io">
   <img width="122" height="24" src="http://made-with.prisma.io/indigo.svg" alt="Made with Prisma" />
 </a>
-<img align="left" alt="PostgreSQL" width="24px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/postgresql/postgresql.png" />
-<img align="left" alt="Git" width="24px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png" />
 <br/> <br/>
 
 ## User Stories
