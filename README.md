@@ -1,7 +1,5 @@
 # BED Final Project Starter
 
-This repository contains starter code for the Bookings project.
-
 ## How to get started
 
 You can clone the repo, install and run the app with the following commands:
@@ -77,7 +75,7 @@ The models are built using Prisma and the data is read, modified, and deleted th
   <img width="122" height="24" src="http://made-with.prisma.io/indigo.svg" alt="Made with Prisma" />
 </a>
 <img align="left" alt="PostgreSQL" width="24px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/postgresql/postgresql.png" />
-<img align="left" alt="Git" width="24px" src="https://raw.githubusercontent.com/github/explore/main/topics/git/git.png" />
+<img align="left" alt="Git" width="24px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png" />
 <br/> <br/>
 
 ## User Stories
