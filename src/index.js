@@ -1,6 +1,7 @@
 // IMPORTS
 import * as Sentry from "@sentry/node";
 import express from "express";
+import cors from "cors";
 import "dotenv/config";
 import { log } from "./middleware/logMiddleware.js";
 import usersRoute from "./routes/usersRoute.js";
@@ -31,6 +32,9 @@ Sentry.init({
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
+
+// Enable CORS for all origins
+app.use(cors());
 
 app.use(express.json());
 
